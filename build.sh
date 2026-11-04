@@ -8,4 +8,4 @@ git pull
 cmake -S . -B build
 cmake --build build
 
-./build/hello
+./build/hello_world
