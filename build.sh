@@ -4,8 +4,8 @@ cd "$(dirname "$0")"
 
 git pull
 
-
 cmake -S . -B build
+
 cmake --build build
 
-./build/hello
+./build/test
