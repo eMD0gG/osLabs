@@ -25,17 +25,17 @@
 
 struct SharedState {
     long long counter;
-    int       master_pid;
-    int       copy1_pid;
-    int       copy2_pid;
+    int master_pid;
+    int copy1_pid;
+    int copy2_pid;
 };
 
 static const char* SHM_NAME = "myapp_state";
 
 static std::string now_str() {
     using namespace std::chrono;
-    auto tp  = system_clock::now();
-    auto ms  = duration_cast<milliseconds>(tp.time_since_epoch()) % 1000;
+    auto tp = system_clock::now();
+    auto ms = duration_cast<milliseconds>(tp.time_since_epoch()) % 1000;
     std::time_t t = system_clock::to_time_t(tp);
     std::tm tm{};
 #ifdef _WIN32
@@ -203,7 +203,6 @@ int main(int argc, char** argv) {
             std::this_thread::sleep_for(std::chrono::seconds(3));
             if (!running || !is_master) continue;
 
-            // Копия 1
             shm.Lock();
             int c1_pid = st->copy1_pid;
             bool c1_alive = is_process_alive(c1_pid);
@@ -223,7 +222,6 @@ int main(int argc, char** argv) {
                 }
             }
 
-            // Копия 2
             shm.Lock();
             int c2_pid = st->copy2_pid;
             bool c2_alive = is_process_alive(c2_pid);
